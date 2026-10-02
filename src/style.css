@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* Direction artistique : style suisse. Noir et blanc sur gris clair, grotesque en grand et en
+   graisse normale, filets noirs, aucun arrondi, plus une seule couleur d'accent (bleu électrique
+   en clair, corail en sombre) pour les actions et les blocs forts. Les couleurs des rôles
+   restent réservées aux données. Le mode sombre suit le réglage du système. */
+:root {
+  --bg: #efefef; --fg: #0a0a0a; --accent: #1a1aff; --on-accent: #ffffff;
+  --muted: #474747; --faint: #666666; --hairline: #cfcfcf; --strong: #0a0a0a;
+  --surface: #ffffff; --shadow: rgb(0 0 0 / 0.12);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0a; --fg: #efefef; --accent: #f77245; --on-accent: #0a0a0a;
+    --muted: #b8b8b8; --faint: #949494; --hairline: #2e2e2e; --strong: #efefef;
+    --surface: #161616; --shadow: rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+/* Bloc d'accent : fond à la couleur d'accent (formule Pro, appel final). */
+.accent-theme {
+  --bg: #1a1aff; --fg: #ffffff; --accent: #ffffff; --on-accent: #1a1aff;
+  --muted: rgb(255 255 255 / 0.84); --faint: rgb(255 255 255 / 0.7); --hairline: rgb(255 255 255 / 0.3); --strong: #ffffff; --surface: #1a1aff;
+}
+@media (prefers-color-scheme: dark) {
+  .accent-theme {
+    --bg: #f77245; --fg: #0a0a0a; --accent: #0a0a0a; --on-accent: #f77245;
+    --muted: rgb(10 10 10 / 0.82); --faint: rgb(10 10 10 / 0.68); --hairline: rgb(10 10 10 / 0.3); --strong: #0a0a0a; --surface: #f77245;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-hairline: var(--hairline);
+  --color-strong: var(--strong);
+  --color-surface: var(--surface);
+}
+
+@theme {
+  --font-sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Les 7 rôles couleur Rekordbox */
+  --color-role-openers: #ff5fa2;
+  --color-role-mainteners: #19bccb;
+  --color-role-booster: #3d6bff;
+  --color-role-pivot: #f2c500;
+  --color-role-reset: #27b85a;
+  --color-role-anthems: #ff8a1a;
+  --color-role-peak: #f03232;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; background: var(--bg); }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    font-size: 16px; line-height: 24px;
+    overflow-x: clip;
+    transition: background-color 0.4s var(--ease-out-quint), color 0.4s var(--ease-out-quint);
+  }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+  :focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  code { @apply font-mono; font-size: 0.82em; }
+  [id] { scroll-margin-top: 64px; }
+}
+
+/* =====================================================================
+   SYSTÈME — tout texte, toute couleur, tout espacement vient d'ici.
+
+   1. Échelle typographique : 8 styles, pas un de plus.
+      t-display  fluide      affichage : h1 et appel final (un par écran)
+      t-title    fluide      titre de section, bandeau de styles
+      t-figure   fluide      grand chiffre : statistiques et prix
+      t-heading  24/28       titre d'élément : passe, étape, question
+      t-body     16/24       prose
+      t-label    16/20 500   nom court : rôle, pack, ligne de tarif
+      t-control  14/20 500   contrôle : bouton, navigation, en-tête de table
+      t-small    13/20       libellé de section, légende, métadonnée
+      t-mono     12/16       donnée technique : nom de skill, tonalité, minutage
+
+   2. Couleur du texte : fg = titres et données · muted = prose secondaire
+      · faint = libellés, légendes, éléments non inclus.
+
+   3. Accent (bleu en clair, corail en sombre) : uniquement l'action
+      (bouton principal, lien survolé, onglet actif) et trois emphases
+      (2e ligne du h1, colonne Pro, bloc final). Jamais sur un chiffre,
+      un numéro ou une coche. Les 7 couleurs de rôle sont des données.
+
+   4. Filets : 2px fg = limite de section · 1px fg = ligne de liste ou de
+      tableau · 1px hairline = sous-ligne à l'intérieur d'un élément.
+
+   5. Espacements (multiples de 4) : --gap-in 8 · --gap-el 24 · --gap-block
+      56→80 (entre l'en-tête d'une section et son contenu) · --gap-section
+      80→128. Serré dans un groupe, large entre deux groupes.
+   ===================================================================== */
+:root { --gap-in: 8px; --gap-el: 24px; --gap-block: 56px; --gap-section: 80px; }
+@media (min-width: 1024px) { :root { --gap-block: 80px; --gap-section: 128px; } }
+
+@utility t-display { font-size: clamp(2.6rem, 8.4vw, 8.25rem); line-height: 0.9; letter-spacing: -0.045em; font-weight: 400; }
+@utility t-title { font-size: clamp(2rem, 3.5vw, 3.25rem); line-height: 1.04; letter-spacing: -0.035em; font-weight: 400; }
+@utility t-figure { font-size: clamp(3.5rem, 6vw, 5.5rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 400; }
+@utility t-heading { font-size: 24px; line-height: 28px; letter-spacing: -0.02em; font-weight: 400; }
+@utility t-body { font-size: 16px; line-height: 24px; font-weight: 400; }
+@utility t-label { font-size: 16px; line-height: 20px; letter-spacing: -0.01em; font-weight: 500; }
+@utility t-control { font-size: 14px; line-height: 20px; font-weight: 500; }
+@utility t-small { font-size: 13px; line-height: 20px; font-weight: 400; }
+@utility t-mono { font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 400; }
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-[1520px] px-5 md:px-8 xl:px-10; }
+
+  /* Section : filet épais, libellé discret à gauche, contenu à partir du milieu. */
+  .section { @apply border-t-2 border-fg pt-4; padding-bottom: var(--gap-section); }
+  .section-grid { @apply grid lg:grid-cols-12 lg:gap-x-6; }
+  .section-grid > .label { @apply lg:col-span-5; }
+  .section-grid > div { @apply pt-10 lg:col-span-7 lg:pt-14; }
+  .section-body { margin-top: var(--gap-block); }
+  .label { @apply t-small text-faint; }
+  .lead { @apply t-body max-w-[460px] text-muted; margin-top: var(--gap-el); }
+  .note { @apply t-small max-w-[560px] text-faint; margin-top: var(--gap-el); }
+  .link { @apply underline decoration-1 underline-offset-[3px]; }
+  .link:hover { @apply text-accent; }
+
+  .btn {
+    @apply t-control inline-flex min-h-12 items-center justify-center gap-2 border border-fg px-6 whitespace-nowrap text-fg;
+    transition: background-color 0.3s var(--ease-out-quint), color 0.3s var(--ease-out-quint), border-color 0.3s var(--ease-out-quint);
+  }
+  .btn:hover { @apply bg-fg text-bg; }
+  .btn-primary { @apply border-accent bg-accent text-on-accent; }
+  .btn-primary:hover { @apply border-fg bg-fg text-bg; }
+  .btn-sm { @apply min-h-9 px-4; }
+  .btn.is-disabled { @apply pointer-events-none cursor-not-allowed opacity-40; }
+  .actions { @apply flex flex-col gap-3 sm:flex-row; }
+
+  .icon-btn { @apply inline-flex size-9 items-center justify-center border border-fg text-fg; }
+  .icon-btn svg { @apply size-4; }
+
+  /* Navigation */
+  .brand { @apply t-control; }
+  .brand span { @apply t-small ml-3 hidden text-faint sm:inline; }
+  .nav-link { @apply t-control text-fg; }
+  .nav-link:hover, .link-quiet:hover { @apply text-accent; }
+  .nav-panel { @apply hidden items-center gap-7 md:flex; }
+  .nav-panel.is-open { @apply absolute inset-x-0 top-14 flex flex-col items-stretch gap-0 border-b-2 border-fg bg-bg px-5 pt-1 pb-5; }
+  .nav-panel.is-open .nav-link { @apply t-heading border-b border-hairline py-4; }
+  .nav-panel.is-open .btn { @apply mt-5 min-h-12; }
+
+  /* Ligne de liste : filet 1px fg en haut, et en bas sur la dernière. */
+  .rule-row { @apply border-t border-fg; }
+  .rule-row:last-child { @apply border-b; }
+
+  /* Tableau de métadonnées du hero */
+  .meta { margin-top: var(--gap-el); }
+  .meta > div { @apply t-small grid grid-cols-2 gap-x-6 border-t border-fg py-2 lg:grid-cols-12; }
+  .meta > div:last-child { @apply border-b; }
+  .meta dt { @apply col-span-2 text-faint lg:col-span-5; }
+  .meta dd { @apply lg:col-span-4; }
+  .meta dd:last-child { @apply text-muted lg:col-span-3; }
+
+  /* Les passes (Fonctionnement) */
+  .pass { @apply grid gap-x-6 gap-y-2 border-t border-fg py-6 lg:grid-cols-12; }
+  .pass:last-child { @apply border-b; }
+  .pass-n { @apply t-mono text-faint lg:col-span-1 lg:pt-1.5; }
+  .pass h3 { @apply t-heading lg:col-span-4; }
+  .pass-meta { @apply t-small flex flex-col text-faint lg:col-span-2 lg:pt-1; }
+  .pass-meta code { @apply t-mono text-fg; }
+  .pass > div { @apply lg:col-span-5; }
+  .pass > div > p { @apply t-body max-w-[460px]; }
+  .pass ul { @apply t-small mt-4 text-muted; }
+  .pass ul li { @apply border-t border-hairline py-2; }
+
+  /* Chiffres */
+  .stats { @apply grid grid-cols-2 lg:grid-cols-4; }
+  .stats > div { @apply border-t border-fg py-4 pr-4 lg:border-l lg:pl-4; }
+  .stats > div:first-child { @apply lg:border-l-0 lg:pl-0; }
+  .stats dd { @apply t-figure; }
+  .stats dt { @apply t-small mt-2 text-faint; }
+
+  /* Rôles */
+  .roles { @apply grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-7; }
+  .roles > li { @apply border-t border-fg py-4 pr-4 xl:border-l xl:pl-4; }
+  .roles > li:first-child { @apply xl:border-l-0 xl:pl-0; }
+  .role-swatch { @apply block h-2 w-full; }
+  .role-name { @apply t-label mt-6; }
+  .role-desc { @apply t-small mt-2 text-muted; }
+  .role-e { @apply t-mono mt-4 text-faint; }
+
+  /* Visuel du hero : graphique du set + carte Collection */
+  .panel { @apply border border-fg bg-surface p-4 sm:p-6; }
+  .panel-head { @apply t-small flex justify-between gap-4; }
+  .panel-axis { @apply t-mono flex justify-between border-t border-fg pt-2 text-faint; }
+  .panel-legend { @apply t-small mt-4 hidden flex-wrap gap-x-6 gap-y-2 sm:flex; }
+  .panel-legend li { @apply flex items-center gap-2; }
+  .panel-legend i { @apply block size-2; }
+  .deck { @apply t-mono border border-fg bg-bg; }
+  .deck-head { @apply flex items-center justify-between border-b border-fg px-4 py-2; }
+  .deck-tabs { @apply flex border border-fg; }
+  .deck-tab { @apply px-3 py-1; }
+  .deck-tab[aria-selected="true"] { @apply bg-accent text-on-accent; }
+  .deck-table th { @apply border-b border-fg px-2 py-2 text-left font-normal text-faint sm:px-3; }
+  .deck-table td { @apply truncate border-b border-hairline px-2 py-2 sm:px-3; }
+  .deck-table tr:last-child td { @apply border-b-0; }
+  .deck .dot { @apply inline-block size-2 rounded-full; }
+  .deck[data-state="before"] .after-only, .deck[data-state="after"] .before-only { display: none; }
+  .deck .before-only { @apply text-faint; }
+
+  /* FAQ */
+  .faq summary { @apply t-heading flex cursor-pointer list-none items-center justify-between gap-6 py-4; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { @apply text-accent; }
+  .faq-plus { @apply transition-transform duration-300; }
+  .faq details[open] .faq-plus { transform: rotate(45deg); }
+  .faq details p { @apply t-body max-w-[600px] pb-6 text-muted; }
+
+  /* Étapes d'installation et liste des prérequis */
+  .step { @apply grid grid-cols-[2rem_1fr] gap-x-4 gap-y-1 py-4 lg:grid-cols-[3rem_1fr_1.4fr] lg:items-baseline; }
+  .step > span { @apply t-mono text-faint; }
+  .step h3 { @apply t-heading; }
+  .step p { @apply t-body col-start-2 text-muted lg:col-start-3; }
+  .needs li { @apply t-body border-t border-fg py-3; }
+  .needs li:last-child { @apply border-b; }
+
+  /* Appel final et gabarit des pages légales */
+  .cta { padding-block: var(--gap-section); }
+  .legal { padding-block: var(--gap-block) var(--gap-section); }
+
+  /* Pied de page */
+  .footer { @apply t-small border-t-2 border-fg pt-4 pb-10; }
+
+  /* Pages légales */
+  .prose-legal h1 { @apply t-title mt-4; }
+  .prose-legal h2 { @apply t-heading mt-12 mb-4 border-t border-fg pt-4; }
+  .prose-legal p, .prose-legal li { @apply t-body text-muted; }
+  .prose-legal p + p { @apply mt-4; }
+  .prose-legal ul { @apply list-disc space-y-2 pl-5; }
+  .prose-legal a { @apply underline decoration-1 underline-offset-[3px]; }
+  .prose-legal a:hover { @apply text-accent; }
+  .prose-legal .updated { @apply t-small mt-4 mb-12 text-faint; }
+  .callout { @apply t-body mb-10 border-l-2 border-fg bg-surface px-6 py-4 text-muted; }
+  .todo { @apply t-mono bg-role-pivot/40 px-1.5 py-px text-fg; }
+}
+
+/* ---------- Tarifs ---------- */
+@layer components {
+  /* Sous 1024 px : rail horizontal aligné sur la marge. Au-delà : trois colonnes séparées par des filets. */
+  .plans-track {
+    @apply -mx-5 flex snap-x snap-mandatory items-stretch gap-3 overflow-x-auto px-5 pb-6 md:-mx-8 md:px-8 lg:mx-0 lg:gap-0 lg:overflow-visible lg:border-y lg:border-fg lg:px-0 lg:pb-0;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .plans-track::-webkit-scrollbar { display: none; }
+  .plan { @apply flex w-[290px] shrink-0 snap-center flex-col border border-fg bg-bg p-6 text-fg sm:w-[330px] lg:w-auto lg:min-w-0 lg:flex-1 lg:shrink lg:border-0 lg:border-l lg:p-8; }
+  .plan:first-child { @apply lg:border-l-0 lg:pl-0; }
+  .plan:last-child { @apply lg:pr-0; }
+  .plan-head { @apply flex items-baseline justify-between; }
+  .plan-head h3 { @apply t-label; }
+  .plan-head span { @apply t-small; }
+  .plan-price { @apply mt-10 flex items-baseline gap-2; }
+  .plan-price span:first-child { @apply t-figure; }
+  .plan-price span + span { @apply t-small text-faint; }
+  .plan-tagline { @apply t-small mt-4 min-h-10 max-w-[300px] text-muted; }
+  .plan-list { @apply mt-8 border-b border-hairline; }
+  .plan-list li { @apply grid grid-cols-[1.25rem_1fr] gap-2 border-t border-hairline py-2; }
+  .plan-list li > span:last-child { @apply t-label; }
+  .plan-list small { @apply t-small block font-normal text-muted; letter-spacing: 0; }
+  .plan-list li.off, .plan-list li.off small { @apply text-faint; }
+  .plan-cta { @apply mt-auto pt-8; }
+}
+
+/* ---------- Styles : bandeau défilant (la seule rupture de grille : pleine largeur) ---------- */
+@layer components {
+  .marquee-band { @apply border-y border-fg py-6; margin-top: var(--gap-block); }
+  .marquee { display: flex; overflow: hidden; user-select: none; }
+  .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; justify-content: space-around; animation: marquee 70s linear infinite; }
+  .marquee-reverse .marquee-track { animation-direction: reverse; animation-duration: 84s; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track > li { @apply t-title whitespace-nowrap; }
+  .marquee-track > li::after { content: "/"; @apply mx-4 text-faint lg:mx-6; }
+  @keyframes marquee { to { transform: translateX(-100%); } }
+}
+
+/* ---------- Mouvement ---------- */
+@layer components {
+  .hero-line { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+  .hero-line > span { display: block; }
+  .js .hero-line > span, .js [data-hero-fade] { visibility: hidden; }
+  .motion-failsafe .hero-line > span, .motion-failsafe [data-hero-fade] { visibility: visible !important; transform: none !important; opacity: 1 !important; }
+  .word { display: inline-block; }
+  .js .hero-bars > span { transform: scaleY(0); transform-origin: bottom; }
+  .motion-failsafe .hero-bars > span { transform: none !important; }
+
+  header { transition: transform 0.5s var(--ease-out-quint), background-color 0.4s var(--ease-out-quint); }
+  header.is-hidden { transform: translateY(-100%); }
+
+  /* Hero : par défaut, texte puis visuel dans le flux. Avec la WebGL, la séquence est épinglée :
+     le texte s'efface au scroll et le visuel final attend, centré, que les particules s'y posent. */
+  .hero-scene { padding-bottom: var(--gap-section); }
+  .hero-text { @apply pt-8 lg:pt-12; }
+  .stage-canvas { display: none; }
+  .webgl .hero-scene { height: 300vh; padding-bottom: 0; }
+  .webgl .hero-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  .webgl .stage-canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  .webgl .hero-text { position: relative; z-index: 2; padding-top: 5.5rem; will-change: transform; }
+  .webgl .hero-visual { position: absolute; inset-inline: 0; top: calc(50% + 36px); transform: translateY(-50%); }
+  .webgl .hero-visual-inner { margin-top: 0; }
+  .webgl [data-panel], .webgl [data-deck], .webgl .hero-bars { opacity: 0; }
+  .webgl [data-deck] { z-index: 2; }
+  .webgl .hero-bars > span { transform: none !important; }
+
+  /* Curseur (souris uniquement) */
+  .has-cursor, .has-cursor * { cursor: none !important; }
+  .cursor {
+    position: fixed; left: 0; top: 0; z-index: 200; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+    border-radius: 999px; background: #fff; mix-blend-mode: difference; pointer-events: none; opacity: 0;
+    transition: width 0.35s var(--ease-out-quint), height 0.35s var(--ease-out-quint), margin 0.35s var(--ease-out-quint), opacity 0.3s;
+  }
+  .cursor.is-on { opacity: 1; }
+  .cursor.is-link { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee { flex-wrap: wrap; padding-inline: 1.25rem; }
+  .marquee-track { animation: none; flex-wrap: wrap; justify-content: flex-start; min-width: 0; }
+  .marquee-track[aria-hidden] { display: none; }
+  *, *::before, *::after { transition: none !important; }
+}

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{brand}} — Skills Claude pour préparer tes crates Rekordbox</title>
+  <meta name="description" content="Des skills à installer dans Claude qui nettoient, taguent et colorent tes morceaux pour Rekordbox : nom propre, sous-genre Beatport, tonalité Camelot, énergie en étoiles, rôle couleur. Pack gratuit disponible.">
+  <meta property="og:title" content="{{brand}} — Des crates prêts à mixer">
+  <meta property="og:description" content="Skills Claude pour DJ : nettoyage, sous-genre Beatport, tonalité, énergie et couleurs Rekordbox.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+  <script>
+    // Les entrées animées partent masquées seulement si les animations vont tourner ; filet de sécurité à 3,5 s.
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("js");
+      setTimeout(function () { document.documentElement.classList.add("motion-failsafe"); }, 3500);
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-fg focus:px-3 focus:py-2 focus:text-bg">Aller au contenu</a>
+  <!--@header-->
+
+  <main id="contenu">
+    <!-- Hero : une seule séquence. Les particules (WebGL) se rangent en vinyle, puis au scroll
+         se déroulent et se posent sur les barres du graphique. Sans WebGL : le visuel statique. -->
+    <section class="hero-scene" data-stage>
+      <div class="hero-sticky">
+        <canvas class="stage-canvas" aria-hidden="true"></canvas>
+        <div class="hero-text wrap" data-hero-text>
+          <h1 class="t-display"><span class="hero-line"><span>Des crates prêts à mixer.</span></span> <span class="hero-line"><span class="text-accent">Pas une nuit de rangement.</span></span></h1>
+          <dl data-hero-fade class="meta">
+            <div><dt>Produit</dt><dd>Skills à installer dans Claude</dd><dd>Pour Rekordbox 7</dd></div>
+            <div><dt>Ce que ça fait</dt><dd>Nettoie, tague, note, colore</dd><dd>{{genres}} genres, {{subgenres}}+ sous-genres</dd></div>
+            <div><dt>Conditions</dt><dd>Abonnement Claude requis</dd><dd>Paiement unique, audio jamais réencodé</dd></div>
+          </dl>
+          <div data-hero-fade class="actions mt-6">
+            <!--@checkout:free:Télécharger gratuitement-->
+            <a class="btn btn-secondary" href="#tarifs">Voir les tarifs</a>
+          </div>
+        </div>
+        <div class="hero-visual wrap">
+          <div class="hero-visual-inner relative mt-14 lg:mt-20">
+            <figure data-panel class="panel" aria-label="Exemple : l'énergie d'un set de 2 heures, morceau par morceau, colorée par rôle">
+              <p class="panel-head"><span>Set, 2 h, <!--@arc-count--> morceaux</span><span class="hidden text-faint sm:inline">Hauteur = énergie. Couleur = rôle.</span></p>
+              <div class="hero-bars mt-6 flex h-[150px] items-end gap-[2px] sm:gap-1 lg:mt-[min(270px,25svh)] lg:h-[min(256px,28svh)]" aria-hidden="true"><!--@arc--></div>
+              <div class="panel-axis"><span>0:00</span><span class="hidden sm:inline">0:30</span><span>1:00</span><span class="hidden sm:inline">1:30</span><span>2:00</span></div>
+              <ul class="panel-legend">
+                <li><i class="bg-role-openers"></i>Openers</li><li><i class="bg-role-mainteners"></i>Mainteners</li><li><i class="bg-role-booster"></i>Booster</li><li><i class="bg-role-pivot"></i>Pivot</li><li><i class="bg-role-reset"></i>Groove Reset</li><li><i class="bg-role-anthems"></i>Anthems</li><li><i class="bg-role-peak"></i>Peak Time</li>
+              </ul>
+            </figure>
+
+            <figure data-deck class="deck mt-4 lg:absolute lg:-top-[44px] lg:right-6 lg:mt-0 lg:w-[520px]" data-state="after" aria-label="Exemple : un crate avant et après le passage des skills">
+              <div class="deck-head">
+                <span><span class="hidden sm:inline">Collection, </span>5 morceaux</span>
+                <div class="deck-tabs" role="tablist" aria-label="Comparer avant et après">
+                  <button type="button" role="tab" class="deck-tab" aria-selected="false" data-show="before">Avant</button>
+                  <button type="button" role="tab" class="deck-tab" aria-selected="true" data-show="after">Après</button>
+                </div>
+              </div>
+              <table class="deck-table w-full table-fixed border-collapse">
+                <colgroup><col class="w-7 sm:w-9"><col><col class="hidden w-[24%] sm:table-column"><col class="w-[15%] sm:w-[11%]"><col class="w-[23%] sm:w-[18%]"></colgroup>
+                <thead>
+                  <tr><th scope="col"><span class="sr-only">Rôle</span></th><th scope="col">Titre</th><th scope="col" class="hidden sm:table-cell">Genre</th><th scope="col">Ton.</th><th scope="col">Classe</th></tr>
+                </thead>
+                <tbody>
+              <tr><td><span class="after-only dot bg-role-openers" title="Openers"></span></td><td><span class="before-only">01_kessler_-_night_signal_(orig</span><span class="after-only">Kessler - Night Signal</span></td><td class="hidden sm:table-cell"><span class="before-only">Drum &amp; Bass</span><span class="after-only">Liquid</span></td><td><span class="before-only">—</span><span class="after-only">8A</span></td><td><span class="before-only">—</span><span class="after-only" aria-label="1 étoile sur 5">★☆☆☆☆</span></td></tr>
+              <tr><td><span class="after-only dot bg-role-mainteners" title="Mainteners"></span></td><td><span class="before-only">marlo vance low tide [320] www</span><span class="after-only">Marlo Vance - Low Tide</span></td><td class="hidden sm:table-cell"><span class="before-only">—</span><span class="after-only">Rollers</span></td><td><span class="before-only">—</span><span class="after-only">9A</span></td><td><span class="before-only">—</span><span class="after-only" aria-label="2 étoiles sur 5">★★☆☆☆</span></td></tr>
+              <tr><td><span class="after-only dot bg-role-pivot" title="Pivot"></span></td><td><span class="before-only">Track 07</span><span class="after-only">Neve &amp; Oro - Glasshouse</span></td><td class="hidden sm:table-cell"><span class="before-only">Electronic</span><span class="after-only">UK Garage</span></td><td><span class="before-only">—</span><span class="after-only">4B</span></td><td><span class="before-only">—</span><span class="after-only" aria-label="3 étoiles sur 5">★★★☆☆</span></td></tr>
+              <tr><td><span class="after-only dot bg-role-booster" title="Booster"></span></td><td><span class="before-only">HALIX-PRESSURE_DROP-WEB-2025</span><span class="after-only">Halix - Pressure Drop</span></td><td class="hidden sm:table-cell"><span class="before-only">Drum &amp; Bass</span><span class="after-only">Neurofunk</span></td><td><span class="before-only">—</span><span class="after-only">10A</span></td><td><span class="before-only">—</span><span class="after-only" aria-label="4 étoiles sur 5">★★★★☆</span></td></tr>
+              <tr><td><span class="after-only dot bg-role-peak" title="Peak Time"></span></td><td><span class="before-only">dread unit warhead VIP (1)</span><span class="after-only">Dread Unit - Warhead</span></td><td class="hidden sm:table-cell"><span class="before-only">DnB</span><span class="after-only">Dancefloor DnB</span></td><td><span class="before-only">—</span><span class="after-only">11A</span></td><td><span class="before-only">—</span><span class="after-only" aria-label="5 étoiles sur 5">★★★★★</span></td></tr>
+              </tbody>
+              </table>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fonctionnement -->
+    <section id="fonctionnement" class="section">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">Fonctionnement</p>
+          <div>
+            <h2 class="t-title">Trois passes, de ton dossier de téléchargements à un crate prêt pour le set.</h2>
+            <p class="lead">Chaque skill est un fichier que tu installes dans Claude. Ensuite, tu lui parles normalement : « nettoie ce dossier », « mets le bon sous-genre », « colore les tracks ».</p>
+          </div>
+        </div>
+        <ol class="section-body">
+          <li data-reveal class="pass"><span class="pass-n">01</span><h3>Nettoyer</h3><p class="pass-meta"><code>crate-cleanup</code><span>Pack Gratuit</span></p><div><p>Remet de l'ordre dans un dossier de morceaux fraîchement téléchargés.</p><ul><li>Fichiers renommés « Artiste - Titre »</li><li>Tags réécrits : artiste, titre, genre, année, label</li><li>Crédits vérifiés en ligne</li><li>Un nom de crate proposé</li></ul></div></li>
+          <li data-reveal class="pass"><span class="pass-n">02</span><h3>Préciser</h3><p class="pass-meta"><code>crate-precision</code><span>Pack Pro</span></p><div><p>Transforme un crate propre en crate pointu, morceau par morceau.</p><ul><li>Vrai sous-genre selon la taxonomie Beatport</li><li>Tonalité Beatport en Camelot, comparée à Rekordbox</li><li>Énergie de 1 à 5 étoiles, mesurée sur l'audio</li></ul></div></li>
+          <li data-reveal class="pass"><span class="pass-n">03</span><h3>Colorer</h3><p class="pass-meta"><code>crate-color</code><span>Pack Pro</span></p><div><p>Pose le rôle de chaque morceau en set directement dans Rekordbox.</p><ul><li>7 rôles couleur, de l'ouverture au peak time</li><li>Claude pilote Rekordbox à ta place</li><li>Contrôle visuel à chaque série de morceaux</li></ul></div></li>
+          <li data-reveal class="pass"><span class="pass-n">+</span><h3>Migrer</h3><p class="pass-meta"><code>crate-migration</code><span>Pack Complet</span></p><div><p>Recrée sur SoundCloud une playlist Spotify, YouTube, Deezer, Apple Music ou une tracklist copiée-collée.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Styles -->
+    <section id="styles" class="section overflow-hidden">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">Styles</p>
+          <div>
+            <h2 class="t-title">Tous les styles électroniques, jusqu'au sous-genre.</h2>
+            <p class="lead">La taxonomie Beatport complète, plus les sous-genres drum &amp; bass que Beatport ignore. Fini le « Drum &amp; Bass » ou le « Techno » fourre-tout.</p>
+          </div>
+        </div>
+        <dl class="stats section-body">
+          <div data-reveal><dd>{{genres}}</dd><dt>genres</dt></div>
+          <div data-reveal><dd>{{subgenres}}+</dd><dt>sous-genres</dt></div>
+          <div data-reveal><dd>7</dd><dt>rôles couleur</dt></div>
+          <div data-reveal><dd>4</dd><dt>skills</dt></div>
+        </dl>
+      </div>
+      <div class="marquee-band" role="group" aria-label="Exemples de styles reconnus">
+        <!--@styles-->
+      </div>
+    </section>
+
+    <!-- Rôles -->
+    <section id="roles" class="section">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">Les 7 rôles</p>
+          <div>
+            <h2 class="t-title">Un coup d'œil sur la couleur, et tu sais où le morceau joue dans ton set.</h2>
+            <p class="lead">Le rôle part de l'énergie mesurée, puis Claude juge la fonction du morceau en soirée. Pivot et Groove Reset sont proposés au feeling, à toi de valider.</p>
+          </div>
+        </div>
+        <ul class="roles section-body">
+          <li data-reveal><span class="role-swatch bg-role-openers"></span><p class="role-name">Openers</p><p class="role-desc">Ouverture de set, deep, atmosphérique.</p><p class="role-e">1–2 ★</p></li>
+          <li data-reveal><span class="role-swatch bg-role-mainteners"></span><p class="role-name">Mainteners</p><p class="role-desc">Le groove qui tient le dancefloor.</p><p class="role-e">2–3 ★</p></li>
+          <li data-reveal><span class="role-swatch bg-role-booster"></span><p class="role-name">Booster</p><p class="role-desc">Fait monter la salle d'un cran.</p><p class="role-e">3–4 ★</p></li>
+          <li data-reveal><span class="role-swatch bg-role-pivot"></span><p class="role-name">Pivot</p><p class="role-desc">Change de sous-genre, de feel ou de tempo.</p><p class="role-e">transition</p></li>
+          <li data-reveal><span class="role-swatch bg-role-reset"></span><p class="role-name">Groove Reset</p><p class="role-desc">Respiration après un peak, puis relance.</p><p class="role-e">transition</p></li>
+          <li data-reveal><span class="role-swatch bg-role-anthems"></span><p class="role-name">Anthems</p><p class="role-desc">Les tubes, mains en l'air.</p><p class="role-e">4–5 ★</p></li>
+          <li data-reveal><span class="role-swatch bg-role-peak"></span><p class="role-name">Peak Time</p><p class="role-desc">Énergie max, drops lourds.</p><p class="role-e">5 ★</p></li>
+        </ul>
+        <p class="note">Tu préfères d'autres noms ou d'autres couleurs ? Tu les règles une fois, Claude suit ta version.</p>
+      </div>
+    </section>
+
+    <!--@usage-->
+
+    <!-- Tarifs -->
+    <section id="tarifs" class="section">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">Tarifs</p>
+          <div>
+            <h2 class="t-title">Commence gratuitement. Passe au niveau supérieur quand ton crate le mérite.</h2>
+            <p class="lead">Paiement unique, sans abonnement. Une ligne par skill : ce qui est coché est dans le pack.</p>
+          </div>
+        </div>
+        <div data-plans class="plans-track section-body" tabindex="0" role="group" aria-label="Les trois packs, à faire défiler">
+          <!--@plans-->
+        </div>
+        <p class="note lg:hidden" aria-hidden="true">← Glisse pour comparer les packs →</p>
+        <p class="note">Prix TTC. Paiement sécurisé par Polar, qui émet ta facture et gère la TVA de ton pays. Les skills nécessitent un abonnement Claude, non inclus.</p>
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section id="installation" class="section">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">Installation</p>
+          <div>
+            <h2 class="t-title">Opérationnel en deux minutes.</h2>
+            <ol class="section-body">
+              <li data-reveal class="rule-row step"><span>1</span><h3>Récupère ton pack</h3><p>Après le paiement, tu reçois tes fichiers <code>.skill</code> par email et sur la page de confirmation.</p></li>
+              <li data-reveal class="rule-row step"><span>2</span><h3>Ajoute-les à Claude</h3><p>Dans Claude : Paramètres → Capacités → Skills, puis importe chaque fichier.</p></li>
+              <li data-reveal class="rule-row step"><span>3</span><h3>Parle à Claude</h3><p>Donne-lui l'accès à ton dossier de morceaux et demande « nettoie ce crate ».</p></li>
+            </ol>
+            <h3 class="label section-body">Ce qu'il te faut</h3>
+            <ul class="needs mt-2">
+              <li>Un abonnement Claude payant, avec les skills activées.</li>
+              <li>L'application Claude pour ordinateur, pour accéder à ton dossier de morceaux.</li>
+              <li>Rekordbox pour <code>crate-color</code>, avec le contrôle de l'ordinateur autorisé dans Claude.</li>
+              <li>Formats pris en charge : MP3, FLAC, WAV, AIFF (tags plus limités en WAV et AIFF).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="wrap">
+        <div class="section-grid">
+          <p class="label">FAQ</p>
+          <div>
+            <h2 class="t-title">Questions fréquentes</h2>
+            <div class="faq section-body">
+            <details data-reveal class="rule-row"><summary><span>C'est quoi, une skill Claude ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Un fichier d'instructions que Claude charge quand ta demande correspond. Il contient la méthode complète : quelles sources consulter, comment écrire les tags, quels pièges éviter. Tu l'installes une fois dans Claude, puis tu demandes simplement ce que tu veux.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Est-ce que ça touche à mes fichiers audio ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Seulement aux tags (nom, genre, tonalité, note). L'audio n'est jamais réencodé. On conseille quand même de faire une copie du dossier avant le premier passage.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Combien de crédits Claude ça consomme ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Les skills tournent dans ton propre Claude : chaque passage utilise ton quota d'usage, comme n'importe quelle conversation. La consommation dépend surtout du nombre de morceaux et des recherches en ligne (crédits, Beatport).</p></details>
+            <details data-reveal class="rule-row"><summary><span>Ça marche pour quels styles ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Tous les styles électroniques : les sous-genres suivent la taxonomie officielle Beatport. Pour la drum &amp; bass, où Beatport reste vague, la skill ajoute Neurofunk, Rollers, Dancefloor DnB, Drumfunk et Crossbreed.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Et si je n'utilise pas Rekordbox ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Le nettoyage, le sous-genre, la tonalité et l'énergie sont écrits dans les fichiers : Serato, Traktor et les autres logiciels les lisent aussi. Seules les couleurs de crate-color sont propres à Rekordbox.</p></details>
+            <details data-reveal class="rule-row"><summary><span>La tonalité remplace celle de Rekordbox ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Non. Rekordbox garde sa propre analyse audio. La skill te livre un tableau qui compare la clé Beatport et la clé Rekordbox, avec les écarts surlignés : c'est toi qui tranches.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Je paie une fois ou tous les mois ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Une seule fois. Les mises à jour des skills de ton pack sont incluses. Le pack Complet reçoit en plus les nouvelles skills quand elles sortent. L'abonnement Claude, lui, reste à ta charge.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Je peux passer du pack Pro au pack Complet ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Oui : écris à <a class="link" href="mailto:{{email}}">{{email}}</a> et tu ne paies que la différence.</p></details>
+            <details data-reveal class="rule-row"><summary><span>Je peux être remboursé ?</span><span class="faq-plus" aria-hidden="true">+</span></summary><p>Les packs sont des contenus numériques livrés immédiatement : en validant ta commande, tu acceptes que la livraison commence tout de suite et renonces au droit de rétractation de 14 jours. Si une skill ne fonctionne pas comme décrit, écris-nous, on trouve une solution. Le détail est dans les <a class="link" href="/cgv.html">conditions générales de vente</a>.</p></details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA : section inversée -->
+    <section class="accent-theme cta bg-bg text-fg">
+      <div class="wrap">
+        <h2 data-words class="t-display max-w-[1200px]">Ton prochain dossier mérite mieux que « Track 07 ».</h2>
+        <div class="actions section-body">
+          <!--@checkout:free:Télécharger gratuitement-->
+          <a class="btn btn-secondary" href="#tarifs">Voir les tarifs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--@footer-->
+</body>
+</html>
