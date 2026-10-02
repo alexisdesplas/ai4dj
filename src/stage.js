@@ -17,7 +17,7 @@ const VERT = /* glsl */ `
   attribute vec3 aLine;    // position finale sur la barre, en unités monde
   attribute vec3 aColor;
   attribute vec4 aRand;    // (retard, taille, phase, rang du morceau 0..1)
-  uniform float uTime, uP1, uP2, uSpin, uTilt, uRo, uSize, uDist;
+  uniform float uTime, uP1, uP2, uSpin, uTilt, uRo, uSize, uDist, uDust;
   uniform vec3 uCenter, uInk;
   varying vec3 vColor;
   varying float vAlpha;
@@ -31,7 +31,7 @@ const VERT = /* glsl */ `
     float t2 = ease(clamp((uP2 - aRand.w * 0.5 - aRand.x * 0.08) / 0.42, 0.0, 1.0));
 
     float ph = aRand.z * 2.0 * PI;
-    vec3 chaos = uCenter + aChaos * uRo * 1.6
+    vec3 chaos = uCenter + aChaos * uRo * 1.25
       + vec3(sin(uTime * 0.31 + ph), cos(uTime * 0.27 + ph * 1.3), sin(uTime * 0.21 + ph * 0.7)) * uRo * 0.09;
 
     float ang = aDisc.y + uSpin;
@@ -53,7 +53,7 @@ const VERT = /* glsl */ `
     gl_PointSize = uSize * mix(0.65, 1.5, aRand.y) * mix(1.25, 1.0, t1) * (uDist / -mv.z);
 
     vColor = mix(uInk, aColor, smoothstep(0.3, 1.0, t1));
-    vAlpha = mix(0.5, 1.0, smoothstep(0.1, 0.9, t1));
+    vAlpha = mix(uDust, 1.0, smoothstep(0.1, 0.9, t1));
   }
 `;
 
@@ -131,7 +131,7 @@ export function initStage(stage, arc) {
   const uniforms = {
     uTime: { value: 0 }, uP1: { value: 0 }, uP2: { value: 0 }, uSpin: { value: 0 }, uTilt: { value: 0.62 },
     uRo: { value: 1 }, uSize: { value: dpr * (mobile ? 2.0 : 2.3) }, uDist: { value: DIST },
-    uAlpha: { value: 0.92 }, uFade: { value: 1 },
+    uAlpha: { value: 0.92 }, uFade: { value: 1 }, uDust: { value: 0.5 },
     uCenter: { value: new Vector3() }, uInk: { value: new Color("#0d0d0d") },
   };
   const material = new ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms, transparent: true, depthTest: false, depthWrite: false });
@@ -144,6 +144,7 @@ export function initStage(stage, arc) {
     const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     uniforms.uInk.value.set(dark ? "#efefef" : "#0a0a0a");
     uniforms.uAlpha.value = dark ? 0.5 : 0.92;
+    uniforms.uDust.value = dark ? 0.1 : 0.5; // en fusion additive, la poussière blanche sature vite
     material.blending = dark ? AdditiveBlending : NormalBlending;
     material.needsUpdate = true;
   };

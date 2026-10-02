@@ -288,7 +288,8 @@
 
 /* ---------- Mouvement ---------- */
 @layer components {
-  .hero-line { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+  /* Le masque de l'animation laisse la place aux jambages (g, p, ç) malgré l'interligne serré. */
+  .hero-line { display: block; overflow: hidden; padding: 0.06em 0 0.24em; margin: -0.06em 0 -0.24em; }
   .hero-line > span { display: block; }
   .js .hero-line > span, .js [data-hero-fade] { visibility: hidden; }
   .motion-failsafe .hero-line > span, .motion-failsafe [data-hero-fade] { visibility: visible !important; transform: none !important; opacity: 1 !important; }
